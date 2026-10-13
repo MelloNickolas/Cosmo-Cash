@@ -1,0 +1,21 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# Segredos e ambiente (nunca versionar)
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+
+# Front
+node_modules/
+dist/
+
+# Ferramentas locais do editor
+.claude/
+
+# Pacote de publicação do backend (gerado por backend/publicar.ps1)
+deploy/

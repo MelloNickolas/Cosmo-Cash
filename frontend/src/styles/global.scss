@@ -1,0 +1,721 @@
+// O tema precisa vir primeiro: o Carbon só aceita configuração antes de qualquer outro @use dele.
+@use './tema';
+@use '@carbon/react/scss/breakpoint' as *;
+
+/* IBM Plex Sans self-hosted (o PWA não depende de CDN). Importado em main.tsx. */
+
+:root {
+  color-scheme: dark;
+
+  /* O Carbon resolve os tokens de COMPONENTE pelo nome do tema (white/g10/g90/g100). Como o nosso é
+     customizado, eles caem nos valores do tema branco; por isso são redefinidos aqui com a paleta. */
+
+  /* Botões */
+  --cds-button-primary: #39ff14;
+  --cds-button-primary-hover: #2ee610;
+  --cds-button-primary-active: #25c20d;
+  --cds-button-secondary: #243056;
+  --cds-button-secondary-hover: #2d3a66;
+  --cds-button-secondary-active: #364477;
+  --cds-button-tertiary: #5bc0be;
+  --cds-button-tertiary-hover: #5bc0be;
+  --cds-button-tertiary-active: #3fa5a3;
+  --cds-button-danger-primary: #da1e28;
+  --cds-button-danger-secondary: #ff8389;
+  --cds-button-danger-hover: #ba1b23;
+  --cds-button-danger-active: #750e13;
+  --cds-button-separator: #0b1320;
+  --cds-button-disabled: #2d3a66;
+
+  /* Alternador de período (ContentSwitcher): o item selecionado usa layer-selected-inverse */
+  --cds-layer-selected-inverse: #5bc0be;
+  --cds-layer-selected-hover-inverse: #86d6d4;
+  --cds-content-switcher-background: #1c2541;
+  --cds-content-switcher-background-hover: #243056;
+  --cds-content-switcher-selected: #2d3a66;
+
+  /* Notificações */
+  --cds-notification-background-error: #3b1417;
+  --cds-notification-background-success: #12361a;
+  --cds-notification-background-info: #1a2a4f;
+  --cds-notification-background-warning: #3a3010;
+  --cds-notification-action-hover: #243056;
+
+  /* Tags */
+  --cds-tag-background-gray: #243056;
+  --cds-tag-color-gray: #d4dbf0;
+  --cds-tag-hover-gray: #2d3a66;
+  --cds-tag-border-gray: #364477;
+  --cds-tag-background-green: #12361a;
+  --cds-tag-color-green: #6fdc8c;
+  --cds-tag-hover-green: #1a4a24;
+  --cds-tag-border-green: #1f5a2c;
+  --cds-tag-background-cyan: #0f3b3a;
+  --cds-tag-color-cyan: #86d6d4;
+  --cds-tag-hover-cyan: #154e4c;
+  --cds-tag-border-cyan: #1c6361;
+  --cds-tag-background-teal: #0f3b3a;
+  --cds-tag-color-teal: #86d6d4;
+  --cds-tag-hover-teal: #154e4c;
+  --cds-tag-border-teal: #1c6361;
+  --cds-tag-background-red: #4a1519;
+  --cds-tag-color-red: #ffb3b8;
+  --cds-tag-hover-red: #5f1b20;
+  --cds-tag-border-red: #7a2329;
+  --cds-tag-background-blue: #1a2a5c;
+  --cds-tag-color-blue: #a6c8ff;
+  --cds-tag-hover-blue: #22367a;
+  --cds-tag-border-blue: #2f4aa0;
+
+  --cosmo-header: 3rem;
+  --cosmo-sidenav: 16rem;
+  --cosmo-bottom: 4rem;
+  --cosmo-neon: #39ff14;
+  --cosmo-teal: #5bc0be;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--cds-background);
+  color: var(--cds-text-primary);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  min-height: 100dvh;
+}
+
+/* Evita zoom automático do iOS ao focar campos. */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+/* ---------- Casca do app ---------- */
+
+.app {
+  min-height: 100dvh;
+}
+
+.marca {
+  margin-right: 0.35rem;
+}
+
+.header-usuario {
+  align-self: center;
+  margin-right: 0.5rem;
+  color: var(--cds-text-secondary);
+  font-size: 0.875rem;
+  max-width: 40vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conteudo {
+  padding: calc(var(--cosmo-header) + 1rem) 1rem calc(var(--cosmo-bottom) + 2rem + env(safe-area-inset-bottom));
+  max-width: 100%;
+}
+
+@include breakpoint(md) {
+  .conteudo {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@include breakpoint(lg) {
+  .conteudo {
+    margin-left: var(--cosmo-sidenav);
+    padding: calc(var(--cosmo-header) + 1.5rem) 2rem 3rem;
+    max-width: calc(1400px + var(--cosmo-sidenav));
+  }
+}
+
+/* ---------- Navegação inferior (celular) ---------- */
+
+.bottom-nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 8000;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  height: calc(var(--cosmo-bottom) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--cds-layer-01);
+  border-top: 1px solid var(--cds-border-subtle-01);
+}
+
+.bottom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  height: 100%;
+  color: var(--cds-text-secondary);
+  text-decoration: none;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02rem;
+  border-top: 2px solid transparent;
+
+  &.ativo {
+    color: var(--cosmo-neon);
+    border-top-color: var(--cosmo-neon);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: -2px;
+  }
+}
+
+.bottom-nova {
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-top: -1.25rem;
+  border-radius: 50%;
+  background: var(--cosmo-neon);
+  color: #0b1320;
+  box-shadow: 0 0 0 4px var(--cds-background), 0 6px 18px rgba(57, 255, 20, 0.28);
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- Avisos ---------- */
+
+.avisos {
+  position: fixed;
+  z-index: 9500;
+  top: calc(var(--cosmo-header) + 0.5rem);
+  right: 0.5rem;
+  left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+    max-width: 100%;
+  }
+}
+
+/* ---------- Estrutura das páginas ---------- */
+
+.pagina-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 0.25rem 0 0;
+    color: var(--cds-text-secondary);
+  }
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+
+  > * {
+    flex: 1 1 9rem;
+    min-width: 0;
+  }
+
+  .filtro-largo {
+    flex: 2 1 16rem;
+  }
+}
+
+.secao {
+  margin-top: 1.5rem;
+
+  h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+}
+
+.cartao {
+  background: var(--cds-layer-01);
+  padding: 1rem;
+  border: 1px solid var(--cds-border-subtle-00);
+}
+
+.grade-2 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+
+  @include breakpoint(lg) {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.grade-iguais {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+
+  @include breakpoint(md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- Indicadores (KPIs) ---------- */
+
+.grade-kpi {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  @include breakpoint(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @include breakpoint(xlg) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.kpi {
+  background: var(--cds-layer-01);
+  padding: 1rem;
+  min-width: 0;
+  border-left: 3px solid var(--cds-border-subtle-02);
+
+  &.destaque {
+    border-left-color: var(--cosmo-neon);
+  }
+
+  .rotulo {
+    font-size: 0.75rem;
+    letter-spacing: 0.32px;
+    color: var(--cds-text-secondary);
+  }
+
+  .valor {
+    margin-top: 0.35rem;
+    /* Encolhe no celular para o valor nunca quebrar em duas linhas. */
+    font-size: clamp(1.05rem, 5.2vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  &.destaque .valor {
+    color: var(--cosmo-neon);
+    font-weight: 400;
+  }
+
+  .variacao {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--cds-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    &.sobe {
+      color: #6fdc8c;
+    }
+    &.desce {
+      color: #ff8389;
+    }
+  }
+}
+
+/* ---------- Listas: tabela no desktop, cartões no celular ---------- */
+
+.so-mobile {
+  display: block;
+}
+.so-desktop {
+  display: none;
+}
+
+@include breakpoint(md) {
+  /* !important: .lista-cartoes (display:flex) é declarada depois e, sem isso, vence esta regra. */
+  .so-mobile {
+    display: none !important;
+  }
+  .so-desktop {
+    display: block;
+  }
+}
+
+.lista-cartoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item-cartao {
+  background: var(--cds-layer-01);
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border-left: 3px solid var(--cds-border-subtle-02);
+
+  &.cancelada,
+  &.inativo {
+    opacity: 0.7;
+  }
+
+  .linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .titulo {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .secundario {
+    color: var(--cds-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .acoes-cartao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.35rem;
+  }
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.positivo {
+  color: #6fdc8c;
+}
+.negativo {
+  color: #ff8389;
+}
+.neon {
+  color: var(--cosmo-neon);
+}
+.suave {
+  color: var(--cds-text-secondary);
+}
+
+.vazio {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--cds-layer-01);
+
+  h3 {
+    margin: 0 0 0.5rem;
+    font-weight: 400;
+  }
+
+  p {
+    margin: 0 0 1rem;
+    color: var(--cds-text-secondary);
+  }
+}
+
+/* ---------- Formulários ---------- */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.linha-campos {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+
+  @include breakpoint(md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+
+  button {
+    padding: 0.875rem;
+    border: 1px solid var(--cds-border-strong-01);
+    background: var(--cds-field-01);
+    color: var(--cds-text-primary);
+    font: inherit;
+    cursor: pointer;
+    min-height: 3rem;
+
+    &[aria-pressed='true'] {
+      border-color: var(--cosmo-neon);
+      box-shadow: inset 0 0 0 1px var(--cosmo-neon);
+      color: var(--cosmo-neon);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cds-focus);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.itens-venda {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.item-venda {
+  background: var(--cds-layer-01);
+  padding: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-left: 3px solid var(--cds-border-subtle-02);
+
+  .produto {
+    grid-column: 1 / -1;
+  }
+
+  .rodape-item {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--cds-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  @include breakpoint(md) {
+    grid-template-columns: 2fr 0.8fr 1fr 1fr;
+    align-items: end;
+
+    .produto {
+      grid-column: auto;
+    }
+  }
+}
+
+.resumo-venda {
+  position: sticky;
+  bottom: calc(var(--cosmo-bottom) + env(safe-area-inset-bottom) + 0.5rem);
+  z-index: 10;
+  background: var(--cds-layer-02);
+  padding: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 2px solid var(--cosmo-neon);
+
+  .rotulo {
+    font-size: 0.75rem;
+    color: var(--cds-text-secondary);
+  }
+
+  .valor {
+    font-size: clamp(0.9rem, 4.4vw, 1.125rem);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  @include breakpoint(lg) {
+    bottom: 1rem;
+  }
+}
+
+/* ---------- Login ---------- */
+
+.login {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 1rem;
+  background:
+    radial-gradient(60rem 30rem at 50% -10%, rgba(91, 192, 190, 0.12), transparent 60%),
+    var(--cds-background);
+}
+
+.login-cartao {
+  width: 100%;
+  max-width: 24rem;
+  background: var(--cds-layer-01);
+  padding: 2rem 1.5rem;
+  border-top: 3px solid var(--cosmo-neon);
+
+  .logo {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  h1 {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1.75rem;
+    font-weight: 300;
+  }
+
+  p {
+    margin: 0 0 1.5rem;
+    color: var(--cds-text-secondary);
+  }
+}
+
+/* ---------- Gráficos (Carbon Charts) sobre a nossa paleta ---------- */
+
+.grafico {
+  background: var(--cds-layer-01);
+  padding: 1rem;
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.16px;
+  }
+
+  .cds--cc--chart-wrapper,
+  .cds--chart-holder,
+  .cds--cc--chart-wrapper svg.cds--chart-svg {
+    background: transparent !important;
+  }
+
+  /* O tema g100 do Carbon Charts usa cores fixas (#161616/#262626); aqui voltam para os nossos tokens. */
+  .chart-grid-backdrop {
+    fill: transparent !important;
+    stroke: var(--cds-border-subtle-01) !important;
+  }
+
+  .cds--cc--grid line,
+  .cds--cc--axes line {
+    stroke: var(--cds-border-subtle-01) !important;
+  }
+
+  .dot.unfilled {
+    fill: var(--cds-layer-01) !important;
+  }
+
+  .cds--cc--axes text,
+  .cds--cc--legend text,
+  .cds--cc--legend .legend-item p {
+    fill: var(--cds-text-secondary) !important;
+    color: var(--cds-text-secondary) !important;
+  }
+}
+
+.skeleton-bloco {
+  background: var(--cds-skeleton-background);
+  min-height: 6rem;
+}
+
+/* ---------- Ajustes finais ---------- */
+
+.linha-menu {
+  width: 100%;
+  border: 0;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cds-layer-hover-01);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: -2px;
+  }
+}
+
+.linha-clicavel {
+  cursor: pointer;
+
+  &:hover td {
+    background: var(--cds-layer-hover-01);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: -2px;
+  }
+}
+
+.secao-titulo {
+  margin: 0 0 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.sub-titulo {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-secondary);
+}
+
+/* Alternador de período: cabe 5 opções em 375px sem cortar "Semana"/"Período". */
+.filtros .cds--content-switcher {
+  width: 100%;
+}
+
+.filtros .cds--content-switcher-btn {
+  /* !important: o Carbon aplica o padding por tamanho de layout, com especificidade maior. */
+  padding-inline: 0.125rem !important;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8125rem;
+}
+
+.filtros .cds--content-switcher-btn .cds--content-switcher__label {
+  text-align: center;
+}

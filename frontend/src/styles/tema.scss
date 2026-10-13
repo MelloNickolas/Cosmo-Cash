@@ -1,0 +1,135 @@
+// Tema do Cosmo Cash: base do Carbon (g100, escuro) com a paleta "Cyber Verde Neon" por cima.
+//
+//   #0B1320  fundo da aplicação
+//   #1C2541  cards, sidebar, tabelas (layer-01)
+//   #39FF14  ação primária, foco e destaques (nunca em grandes áreas)
+//   #5BC0BE  secundária, links e 2ª série dos gráficos
+//   #FFFFFF  texto
+//
+// As camadas 02/03 e os tons de apoio (texto secundário, bordas) são derivados do #1C2541.
+
+@use 'sass:map';
+@use '@carbon/react/scss/config' with (
+  $css--font-face: false
+);
+@use '@carbon/react/scss/themes';
+
+$cosmo: map.merge(
+  themes.$g100,
+  (
+    background: #0b1320,
+    background-hover: #131c30,
+    background-active: #1c2541,
+    background-selected: #1c2541,
+    background-selected-hover: #243056,
+    background-brand: #39ff14,
+    layer-01: #1c2541,
+    layer-02: #243056,
+    layer-03: #2d3a66,
+    layer-hover-01: #243056,
+    layer-hover-02: #2d3a66,
+    layer-hover-03: #364477,
+    layer-active-01: #2d3a66,
+    layer-active-02: #364477,
+    layer-active-03: #3f4e86,
+    layer-selected-01: #243056,
+    layer-selected-02: #2d3a66,
+    layer-selected-03: #364477,
+    layer-selected-hover-01: #2d3a66,
+    layer-selected-hover-02: #364477,
+    layer-selected-hover-03: #3f4e86,
+    layer-accent-01: #243056,
+    layer-accent-02: #2d3a66,
+    layer-accent-03: #364477,
+    layer-accent-hover-01: #2d3a66,
+    layer-accent-hover-02: #364477,
+    layer-accent-hover-03: #3f4e86,
+    layer-accent-active-01: #364477,
+    layer-accent-active-02: #3f4e86,
+    layer-accent-active-03: #485a97,
+    field-01: #1c2541,
+    field-02: #243056,
+    field-03: #2d3a66,
+    field-hover-01: #243056,
+    field-hover-02: #2d3a66,
+    field-hover-03: #364477,
+    border-subtle-00: #243056,
+    border-subtle-01: #2d3a66,
+    border-subtle-02: #364477,
+    border-subtle-03: #3f4e86,
+    border-subtle-selected-01: #364477,
+    border-subtle-selected-02: #3f4e86,
+    border-subtle-selected-03: #485a97,
+    border-strong-01: #5a6a99,
+    border-strong-02: #6c7cab,
+    border-strong-03: #7d8cb9,
+    border-inverse: #ffffff,
+    border-interactive: #39ff14,
+    border-disabled: #2d3a66,
+    text-primary: #ffffff,
+    text-secondary: #b8c1dc,
+    text-placeholder: #7c89b0,
+    text-helper: #9aa6c9,
+    text-on-color: #0b1320,
+    text-on-color-disabled: #55618a,
+    text-inverse: #0b1320,
+    text-disabled: #55618a,
+    link-primary: #5bc0be,
+    link-primary-hover: #86d6d4,
+    link-secondary: #86d6d4,
+    link-inverse: #0f7573,
+    link-visited: #a9b7e8,
+    icon-primary: #ffffff,
+    icon-secondary: #b8c1dc,
+    icon-on-color: #0b1320,
+    icon-on-color-disabled: #55618a,
+    icon-inverse: #0b1320,
+    icon-disabled: #55618a,
+    interactive: #5bc0be,
+    focus: #39ff14,
+    focus-inset: #0b1320,
+    focus-inverse: #0b1320,
+    highlight: #2d3a66,
+    overlay: rgba(11, 19, 32, 0.78),
+    skeleton-background: #243056,
+    skeleton-element: #364477,
+    button-primary: #39ff14,
+    button-primary-hover: #2ee610,
+    button-primary-active: #25c20d,
+    button-secondary: #243056,
+    button-secondary-hover: #2d3a66,
+    button-secondary-active: #364477,
+    button-tertiary: #5bc0be,
+    button-tertiary-hover: #5bc0be,
+    button-tertiary-active: #3fa5a3,
+    button-separator: #0b1320,
+    button-disabled: #2d3a66,
+    toggle-off: #5a6a99,
+    tag-background-green: #12361a,
+    tag-color-green: #6fdc8c,
+    tag-hover-green: #1a4a24,
+    tag-border-green: #1f5a2c,
+    tag-background-gray: #243056,
+    tag-color-gray: #d4dbf0,
+    tag-hover-gray: #2d3a66,
+    tag-border-gray: #364477,
+    tag-background-cyan: #0f3b3a,
+    tag-color-cyan: #86d6d4,
+    tag-hover-cyan: #154e4c,
+    tag-border-cyan: #1c6361,
+    tag-background-red: #4a1519,
+    tag-color-red: #ffb3b8,
+    tag-hover-red: #5f1b20,
+    tag-border-red: #7a2329
+  )
+);
+
+@use '@carbon/react/scss/theme' with (
+  $theme: $cosmo
+);
+@use '@carbon/react';
+
+// Emite os tokens (--cds-*) do tema ativo no :root. Sem isto o Carbon cai nos fallbacks do tema branco.
+:root {
+  @include theme.theme();
+}
